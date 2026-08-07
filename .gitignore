@@ -1,0 +1,42 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+dist-electron
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Backup files and temporary scripts
+*.sql
+!frontend/public/backup_final.sql
+fix_*.js
+add_*.js
+remove_*.js
+diagnose_*.js
+backup-*.sql
+backs_*.sql
+database_*.sql
+temp_*.sql
+check_*.js
+create_*.sql
+diagnostico_*.ps1
+main.js
+main.mjs

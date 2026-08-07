@@ -1,0 +1,67 @@
+{
+  "name": "shucway-app",
+  "private": true,
+  "version": "1.0.0",
+  "main": "main.js",
+  "homepage": "./",
+  "scripts": {
+    "dev": "npm --prefix frontend run dev",
+    "dev:backend": "npm --prefix backend run dev",
+    "dev:backend:fast": "npm --prefix backend run dev:fast",
+    "dev:backend:watch": "npm --prefix backend run dev:watch",
+    "dev:all": "concurrently \"npm run dev\" \"npm run dev:backend\" --names \"FRONTEND,BACKEND\" --prefix-colors \"cyan,yellow\"",
+    "dev:all:fast": "concurrently \"npm run dev\" \"npm run dev:backend:fast\" --names \"FRONTEND,BACKEND\" --prefix-colors \"cyan,yellow\"",
+    "dev:all:watch": "concurrently \"npm run dev\" \"npm run dev:backend:watch\" --names \"FRONTEND,BACKEND\" --prefix-colors \"cyan,yellow\"",
+    "build": "npm --prefix frontend run build",
+    "build:backend": "npm --prefix backend run build",
+    "build:all": "npm run build:backend && npm run build",
+    "lint": "npm --prefix frontend run lint && npm --prefix backend run lint",
+    "preview": "npm --prefix frontend run preview",
+    "electron": "electron .",
+    "electron-dev": "cross-env NODE_ENV=development electron .",
+    "dist": "npm run build:all && electron-builder --publish never"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1",
+    "cross-env": "^10.1.0",
+    "electron": "^39.1.1",
+    "electron-builder": "^26.0.12"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.57.4",
+    "bcrypt": "^5.1.1",
+    "compression": "^1.8.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "express-rate-limit": "^7.5.0",
+    "helmet": "^8.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "lucide-react": "^0.552.0",
+    "pg": "^8.16.3",
+    "serverless-http": "^4.0.0",
+    "winston": "^3.17.0",
+    "zod": "^3.24.1"
+  },
+  "build": {
+    "asar": false,
+    "appId": "com.shucway.app",
+    "productName": "Shucway App",
+    "directories": {
+      "output": "dist-electron"
+    },
+    "files": [
+      "backend/dist/**/*",
+      "backend/.env",
+      "frontend/dist/**/*",
+      "main.js",
+      "node_modules/**/*",
+      "package.json"
+    ],
+    "win": {
+      "target": "portable",
+      "icon": "frontend/public/logo.png",
+      "compression": "store"
+    }
+  }
+}
