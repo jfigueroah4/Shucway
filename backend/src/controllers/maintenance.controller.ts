@@ -1,6 +1,14 @@
 import { Request, Response } from 'express';
 import { maintenanceService } from '../services/maintenance.service';
 
+const getRouteParam = (value: string | string[] | undefined): string => {
+	if (Array.isArray(value)) {
+		return value[0] ?? '';
+	}
+
+	return value ?? '';
+};
+
 export const maintenanceController = {
 	async listTables(_req: Request, res: Response) {
 		try {
@@ -13,7 +21,7 @@ export const maintenanceController = {
 	},
 
 	async getTableColumns(req: Request, res: Response) {
-		const { tableName } = req.params;
+		const tableName = getRouteParam(req.params.tableName);
 
 		if (!tableName) {
 			res.status(400).json({ message: 'Nombre de tabla requerido' });
@@ -31,7 +39,7 @@ export const maintenanceController = {
 	},
 
 	async getTableData(req: Request, res: Response) {
-		const { tableName } = req.params;
+		const tableName = getRouteParam(req.params.tableName);
 
 		if (!tableName) {
 			res.status(400).json({ message: 'Nombre de tabla requerido' });
@@ -54,7 +62,7 @@ export const maintenanceController = {
 	},
 
 	async createRecord(req: Request, res: Response) {
-		const { tableName } = req.params;
+		const tableName = getRouteParam(req.params.tableName);
 
 		if (!tableName) {
 			res.status(400).json({ message: 'Nombre de tabla requerido' });
@@ -72,7 +80,8 @@ export const maintenanceController = {
 	},
 
 	async updateRecord(req: Request, res: Response) {
-		const { tableName, id } = req.params;
+		const tableName = getRouteParam(req.params.tableName);
+		const id = getRouteParam(req.params.id);
 
 		if (!tableName || !id) {
 			res.status(400).json({ message: 'Nombre de tabla e id requerido' });
@@ -90,7 +99,8 @@ export const maintenanceController = {
 	},
 
 	async deleteRecord(req: Request, res: Response) {
-		const { tableName, id } = req.params;
+		const tableName = getRouteParam(req.params.tableName);
+		const id = getRouteParam(req.params.id);
 
 		if (!tableName || !id) {
 			res.status(400).json({ message: 'Nombre de tabla e id requerido' });

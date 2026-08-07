@@ -6,11 +6,11 @@ import { UploadOptions, UploadResponse } from '../types';
 // Tipo para archivos de Supabase Storage
 interface StorageFile {
   name: string;
-  id: string;
-  updated_at: string;
-  created_at: string;
-  last_accessed_at: string;
-  metadata: Record<string, unknown>;
+  id: string | null;
+  updated_at: string | null;
+  created_at: string | null;
+  last_accessed_at: string | null;
+  metadata: Record<string, unknown> | null;
 }
 
 export class StorageService {

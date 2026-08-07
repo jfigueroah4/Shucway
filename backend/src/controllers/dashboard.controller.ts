@@ -1,6 +1,14 @@
 import { Request, Response } from 'express';
 import { dashboardService } from '../services/dashboard.service';
 
+const getRouteParam = (value: string | string[] | undefined): string => {
+  if (Array.isArray(value)) {
+    return value[0] ?? '';
+  }
+
+  return value ?? '';
+};
+
 export const dashboardController = {
   async getStats(_req: Request, res: Response) {
     try {
@@ -44,7 +52,7 @@ export const dashboardController = {
 
   async getTableColumns(req: Request, res: Response) {
     try {
-      const { tableName } = req.params;
+      const tableName = getRouteParam(req.params.tableName);
       if (!tableName) {
         return res.status(400).json({ message: 'Nombre de tabla requerido' });
       }
@@ -61,7 +69,7 @@ export const dashboardController = {
 
   async getTableData(req: Request, res: Response) {
     try {
-      const { tableName } = req.params;
+      const tableName = getRouteParam(req.params.tableName);
       const filters = req.query.filters ? JSON.parse(req.query.filters as string) : {};
 
       if (!tableName) {
@@ -84,7 +92,7 @@ export const dashboardController = {
 
   async createRecord(req: Request, res: Response) {
     try {
-      const { tableName } = req.params;
+      const tableName = getRouteParam(req.params.tableName);
       const values = req.body;
       if (!tableName) return res.status(400).json({ message: 'Nombre de tabla requerido' });
       const created = await dashboardService.createRecord(tableName, values);
@@ -99,7 +107,8 @@ export const dashboardController = {
 
   async updateRecord(req: Request, res: Response) {
     try {
-      const { tableName, id } = req.params;
+      const tableName = getRouteParam(req.params.tableName);
+      const id = getRouteParam(req.params.id);
       const values = req.body;
       if (!tableName || !id) return res.status(400).json({ message: 'Nombre de tabla e id requerido' });
       const updated = await dashboardService.updateRecord(tableName, id, values);
@@ -114,7 +123,8 @@ export const dashboardController = {
 
   async deleteRecord(req: Request, res: Response) {
     try {
-      const { tableName, id } = req.params;
+      const tableName = getRouteParam(req.params.tableName);
+      const id = getRouteParam(req.params.id);
       if (!tableName || !id) return res.status(400).json({ message: 'Nombre de tabla e id requerido' });
       await dashboardService.deleteRecord(tableName, id);
       res.json({ success: true });
