@@ -12,6 +12,7 @@
     "resolveJsonModule": true,
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
+    "ignoreDeprecations": "5.0",
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true,

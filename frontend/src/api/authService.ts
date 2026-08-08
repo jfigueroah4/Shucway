@@ -105,18 +105,14 @@ export const login = async (credentials: LoginCredentials): Promise<boolean> => 
 // LOGOUT
 // ============================================================
 export const logout = async (): Promise<void> => {
-  try {
-    await api.post('/auth/logout');
-  } catch (error) {
-    console.error('Error en logout:', error);
-  } finally {
-    // Limpiar localStorage y cookies
-    localStore.remove('access_token');
-    localStore.remove('refreshToken');
-    localStore.remove('user');
-    cookieStore.remove('auth_session');
-    message.success('Sesión cerrada correctamente');
-  }
+  // El logout es completamente cliente-side: el backend no necesita invalidar
+  // nada porque el token JWT vive en el almacenamiento del navegador.
+  localStore.remove('access_token');
+  localStore.remove('refreshToken');
+  localStore.remove('user');
+  cookieStore.remove('auth_session');
+
+  message.success('Sesión cerrada correctamente');
 };
 
 // ============================================================
